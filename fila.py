@@ -35,7 +35,7 @@ def enfileirar_prioridade(filas, pessoa):
     """Enfileira na fila correspondente à categoria da pessoa"""
     categoria = pessoa["Categoria"].upper()
     if categoria not in filas:
-        raise ValueError("Categoria inválida. Use: VIP, INTEIRA ou MEIA.")
+        print("Categoria inválida. Use: VIP, INTEIRA ou MEIA.")
     enfileirar(filas[categoria], pessoa)
 
 def desenfileirar_prioridade(filas):
