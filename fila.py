@@ -64,6 +64,7 @@ def criar_ingresso(pessoa, fila, contador):
         "priodade": categoria.upper()
     }
     contador += 1
+    """colocar um contador na main"""
     """enfileira a pessoa na fila"""
     enfileirar_prioridade(fila,pessoa )
     return ingresso, contador
