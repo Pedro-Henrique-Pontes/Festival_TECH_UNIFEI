@@ -1,14 +1,14 @@
 
-def criar_ingresso(pessoa, fila):
+def criar_ingresso(pessoa, fila, contador):
 
     """ cria o ingresso da pessoa"""
     categoria = pessoa["Categoria"].upper()
     ingresso = { 
         "id": contador, 
         "nome": pessoa["Nome"], 
-        "prioridade": categoria.upper()
+        "prioridade": categoria
     }
-    contador += 1
+    
     """colocar contador na main"""
     contador += 1
     
