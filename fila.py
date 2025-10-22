@@ -3,6 +3,8 @@ from collections import deque
 
 def criar_fila():
     return deque()
+def vazia(fila):
+    return len(fila) == 0
 
 def enfileirar(fila, x):
     fila.append(x) 
@@ -19,9 +21,6 @@ def frente(fila):
     if vazia(fila):
         raise IndexError("fila vazia")
     return fila[0]
-
-def vazia(fila):
-    return len(fila) == 0
 
 # ---- Fila com prioridade ---- #
 def criar_fila_prioridade():
