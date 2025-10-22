@@ -1,18 +1,9 @@
 
-def criar_ingresso(pessoa, fila, contador):
+contador = 0
 
-    """ cria o ingresso da pessoa"""
-    categoria = pessoa["Categoria"].upper()
-    ingresso = { 
-        "id": contador, 
-        "nome": pessoa["Nome"], 
-        "prioridade": categoria
-    }
-    
-    """colocar contador na main"""
+def criar_ingresso():
+
+    global contador
     contador += 1
-    
-    """enfileira a pessoa na fila"""
-    enfileirar_prioridade(fila,pessoa )
-    
-    return ingresso, contador
+    ingresso = contador
+    return ingresso

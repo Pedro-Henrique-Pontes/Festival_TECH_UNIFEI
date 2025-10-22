@@ -2,10 +2,15 @@ from fila import *
 from ingressos import *
 
 def bilheteria_portaria():
-    # mantém as duas filas na memória
+
     fila_padrao = criar_fila()
     fila_prioridade = criar_fila_prioridade()
-    tipo_fila = "PADRAO"  # modo inicial
+
+    tempo_logico = 0
+
+    tipo_fila = "PADRAO"  # por definição a fila é modo padrao
+
+    atendidos = []
 
     while True:
         a = input().strip()
@@ -18,7 +23,7 @@ def bilheteria_portaria():
 
         if cmd == "AJUDA" and len(partes) == 1: #Já que é para ajudar, fiz uma tabela completona
             print("=" * 60)
-            print("                💡  COMANDOS DISPONÍVEIS  💡")
+            print("                   COMANDOS DISPONÍVEIS   ")
             print("=" * 60)
             print(f"{'COMANDO':<15} | {'DESCRIÇÃO'}")
             print("-" * 60)
@@ -58,7 +63,9 @@ def bilheteria_portaria():
             pessoa = {
                 "ID": ingresso,
                 "Nome": nome,
-                "Categoria": categoria
+                "Categoria": categoria,
+                "Chegada": tempo_logico,
+                "Atendido": False
             }
 
             if tipo_fila == "PRIORIDADE":
@@ -73,19 +80,51 @@ def bilheteria_portaria():
 
         # ===== ENTRAR =====
         elif cmd == "ENTRAR" and len(partes) == 1:
-            if tipo_fila == "PADRAO":
-                if vazia(fila_padrao):
-                    print("Nenhum visitante na fila.")
+            tempo_logico += 1
+            try:
+                if tipo_fila == "PRIORIDADE":
+                    pessoa = desenfileirar_prioridade(fila_prioridade)
                 else:
                     pessoa = desenfileirar(fila_padrao)
-                    print(f"Entrada: [{pessoa['ID']}] {pessoa['Nome']} ({pessoa['Categoria']})")
-            else:  # PRIORIDADE
-                if vazia_prioridade(fila_prioridade):
-                    print("Nenhum visitante nas filas de prioridade.")
-                else:
-                    pessoa = desenfileirar_prioridade(fila_prioridade)
-                    print(f"Entrada: [{pessoa['ID']}] {pessoa['Nome']} ({pessoa['Categoria']})")
+                
+                pessoa["Atendido"] = True
+                pessoa["Atendimento"] = tempo_logico
+                atendidos.append(pessoa)
+                print(f"Entrada: [{pessoa['ID']}] {pessoa['Nome']} ({pessoa['Categoria']})")
+            except IndexError:
+                print("Nenhuma pessoa na fila.")
 
+        # ===== ESTATISTICAS =====
+        elif cmd == "ESTATISTICAS" and len(partes) == 1:
+            pendentes = 0
+            if tipo_fila == "PRIORIDADE":
+                pendentes = sum(tamanho(fila_prioridade[c]) for c in ["VIP", "INTEIRA", "MEIA"])
+            else:
+                pendentes = tamanho(fila_padrao)
+
+            total_atendidos = len(atendidos)
+
+            # contagem por categoria
+            categorias = {"VIP": 0, "INTEIRA": 0, "MEIA": 0}
+            for p in atendidos:
+                cat = p["Categoria"].upper()
+                if cat in categorias:
+                    categorias[cat] += 1
+
+            # tempo médio de espera
+            tempos = []
+            for p in atendidos:
+                if "Atendimento" in p:
+                    espera = p["Atendimento"] - p["Chegada"]
+                    tempos.append(espera)
+            media = sum(tempos) / len(tempos) if tempos else 0
+
+            print("===== ESTATÍSTICAS =====")
+            print(f"Total pendente:  {pendentes}")
+            print(f"Total atendido:  {total_atendidos}")
+            print(f"VIP: {categorias['VIP']}  |  INTEIRA: {categorias['INTEIRA']}  |  MEIA: {categorias['MEIA']}")
+            print(f"Tempo médio de espera: {media:.2f} minutos")
+            print("========================")
         # ===== CANCELAR =====
         elif cmd == "CANCELAR" and len(partes) == 2:
             try:
@@ -156,3 +195,5 @@ def main():
     bilheteria_portaria()
 
 main()
+
+
