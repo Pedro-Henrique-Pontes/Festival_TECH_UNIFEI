@@ -1,55 +1,38 @@
-#----Funções genéricas de fila normal----#
-from collections import deque
+# fila.py
+from pilha import criar_pilha, push, pop, vazia, tamanho
 
 def criar_fila():
-    return deque()
-def vazia(fila):
-    return len(fila) == 0
+    return []
 
-def enfileirar(fila, x):
-    fila.append(x) 
+def enfileirar(fila, item):
+    fila.append(item)
 
 def desenfileirar(fila):
-    if vazia(fila):
-        raise IndexError("fila vazia")
-    return fila.popleft() 
-
-def tamanho(fila):
-    return len(fila)
+    if not fila:
+        raise IndexError("Fila vazia")
+    return fila.pop(0)
 
 def frente(fila):
-    if vazia(fila):
-        raise IndexError("fila vazia")
+    if not fila:
+        raise IndexError("Fila vazia")
     return fila[0]
 
-# ---- Fila com prioridade ---- #
 def criar_fila_prioridade():
-    
     return {
         "VIP": criar_fila(),
         "INTEIRA": criar_fila(),
         "MEIA": criar_fila()
     }
 
-def enfileirar_prioridade(filas, pessoa):
-    """Enfileira na fila correspondente à categoria da pessoa"""
-    categoria = pessoa["Categoria"].upper()
-    if categoria not in filas:
-        print("Categoria inválida. Use: VIP, INTEIRA ou MEIA.")
-    enfileirar(filas[categoria], pessoa)
-
-def desenfileirar_prioridade(filas):
-    """Desenfileira respeitando a prioridade: VIP → INTEIRA → MEIA"""
-    if not vazia(filas["VIP"]):
-        return desenfileirar(filas["VIP"])
-    elif not vazia(filas["INTEIRA"]):
-        return desenfileirar(filas["INTEIRA"])
-    elif not vazia(filas["MEIA"]):
-        return desenfileirar(filas["MEIA"])
+def enfileirar_prioridade(fila_dict, pessoa):
+    cat = pessoa["Categoria"]
+    if cat in fila_dict:
+        enfileirar(fila_dict[cat], pessoa)
     else:
-        raise IndexError("Todas as filas estão vazias")
+        raise ValueError("Categoria inválida")
 
-def vazia_prioridade(filas):
-    """Verifica se todas as filas estão vazias"""
-    return all(vazia(fila) for fila in filas.values())
-
+def desenfileirar_prioridade(fila_dict):
+    for cat in ["VIP", "INTEIRA", "MEIA"]:
+        if not vazia(fila_dict[cat]):
+            return desenfileirar(fila_dict[cat])
+    raise IndexError("Todas as filas estão vazias")

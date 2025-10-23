@@ -1,25 +1,18 @@
-#Funções genéricas de pilha
+# pilha.py
+
 def criar_pilha():
     return []
 
-def vazia(p):
-    return len(p) == 0
+def push(pilha, item):
+    pilha.append(item)
 
-def empilhar(p, x):
-    p.append(x)  # topo = fim da lista
+def pop(pilha):
+    if not pilha:
+        raise IndexError("Pilha vazia")
+    return pilha.pop()
 
-def desempilhar(p):
-    if vazia(p):
-        return None
-    return p.pop()
+def vazia(pilha):
+    return len(pilha) == 0
 
-def topo(p):
-    if vazia(p):
-        return None
-    return p[-1]
-
-def tamanho(p):
-    return len(p)
-
-def imprime_pilha(p):
-    print("Pilha:", p)
+def tamanho(pilha):
+    return len(pilha)

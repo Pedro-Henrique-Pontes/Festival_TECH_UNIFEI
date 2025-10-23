@@ -1,9 +1,9 @@
+# ingressos.py
 
-contador = 0
+_proximo_id = 1
 
 def criar_ingresso():
-
-    global contador
-    contador += 1
-    ingresso = contador
-    return ingresso
+    global _proximo_id
+    id_atual = _proximo_id
+    _proximo_id += 1
+    return id_atual
