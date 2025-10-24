@@ -91,16 +91,41 @@ def bilheteria_portaria():
             if len(partes) != 2:
                 print("Comando inválido. Uso: MODO PADRAO/PRIORIDADE")
                 continue
-            modo = partes[1].upper()
-            if modo in ["PADRAO", "PRIORIDADE"]:
-                # Salvar estado antes de mudar
-                push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
-                historico_refazer.clear()
-                tipo_fila = modo
-                print("OK")
-            else:
+            novo_modo = partes[1].upper()
+            if novo_modo not in ["PADRAO", "PRIORIDADE"]:
                 print("Modo inválido.")
+                continue
 
+            if novo_modo == tipo_fila:
+                print("OK")  # já está nesse modo
+                continue
+
+            # Salvar estado ANTES da conversão
+            push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
+            historico_refazer.clear()
+
+            # Converter filas conforme o novo modo
+            if tipo_fila == "PADRAO" and novo_modo == "PRIORIDADE":
+                # Converter fila_padrao → fila_prioridade
+                nova_fila_prioridade = criar_fila_prioridade()
+                while not vazia(fila_padrao):
+                    pessoa = desenfileirar(fila_padrao)
+                    enfileirar_prioridade(nova_fila_prioridade, pessoa)
+                fila_prioridade = nova_fila_prioridade
+
+            elif tipo_fila == "PRIORIDADE" and novo_modo == "PADRAO":
+                # Converter fila_prioridade → fila_padrao
+                nova_fila_padrao = criar_fila()
+                # Ordem de prioridade: VIP, INTEIRA, MEIA
+                for cat in ["VIP", "INTEIRA", "MEIA"]:
+                    while not vazia(fila_prioridade[cat]):
+                        pessoa = desenfileirar(fila_prioridade[cat])
+                        enfileirar(nova_fila_padrao, pessoa)
+                fila_padrao = nova_fila_padrao
+
+            tipo_fila = novo_modo
+            print("OK")
+            
         elif cmd == "COMPRAR":
             if len(partes) < 3:
                 print("Uso: COMPRAR <nome> <categoria>")
