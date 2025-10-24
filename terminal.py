@@ -1,5 +1,5 @@
 # terminal.py
-import os
+
 from fila import *
 from ingressos import *
 from roteiro import *
@@ -66,7 +66,7 @@ def bilheteria_portaria():
 
         # =============== Comandos de navegação (locais) ===============
         #puxei todos os comando abaixo do arquivo roteiro
-        
+
         if cmd == "IR":
             if len(partes) < 2 or not partes[1].strip():
                 print("Uso: IR <caminho>")
@@ -271,7 +271,14 @@ def bilheteria_portaria():
                     f.write("ID,Nome,Categoria,Chegada,Atendido,Atendimento\n")
                     for p in atendidos:
                         atend = p.get("Atendimento", "")
-                        f.write(f"{p['ID']},{p['Nome']},{p['Categoria']},{p['Chegada']},{p['Atendido']},{atend}\n")
+                        f.write("\n" + "-" * 40 + "\n")
+                        f.write(f"Ingresso nº {p['ID']}\n")
+                        f.write(f"Nome: {p['Nome']}\n")
+                        f.write(f"Categoria: {p['Categoria']}\n")
+                        f.write(f"Horário de Chegada: {p['Chegada']}\n")
+                        f.write(f"Atendido: {p['Atendido']}\n")
+                        f.write(f"Tempo de Atendimento: {atend}\n")
+                        f.write("-" * 40 + "\n")
                 print("OK")
             except Exception as e:
                 print(f"Erro ao salvar: {e}")

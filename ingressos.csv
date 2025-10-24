@@ -1,1 +1,19 @@
 ID,Nome,Categoria,Chegada,Atendido,Atendimento
+
+----------------------------------------
+Ingresso nº 1
+Nome: ana
+Categoria: VIP
+Horário de Chegada: 0
+Atendido: True
+Tempo de Atendimento: 1
+----------------------------------------
+
+----------------------------------------
+Ingresso nº 2
+Nome: ana estraha
+Categoria: MEIA
+Horário de Chegada: 0
+Atendido: True
+Tempo de Atendimento: 2
+----------------------------------------
