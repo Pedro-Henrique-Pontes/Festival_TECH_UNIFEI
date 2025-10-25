@@ -11,12 +11,13 @@ def _join(caminho_atual, novo_caminho):
 def ir(atual, voltar, avancar, destino):
     push(voltar, atual) #empilha para saber a orientação de onde eu vou e volto 
     avancar.clear()
+    destino = os.path.normpath(destino)
+    print(f"OK: {destino}")
     novo_local = _join(atual, destino) #junta para ficar certinho /tal/tal
-    print(f"OK: {novo_local}")
     return novo_local
 
 def voltar(atual, voltar, avancar):
-    if vazia(voltar):
+    if atual == os.path.normpath('/') and vazia(voltar):
         print("ERRO: Nenhum local anterior.")
         return atual
     push(avancar, atual)# mesma coisa, empilha para saber a orientação de onde eu vou e volto
