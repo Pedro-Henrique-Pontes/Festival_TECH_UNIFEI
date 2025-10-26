@@ -21,4 +21,10 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
 1. **Baixe ou clone este repositório** em seu computador:  
    ```bash
    https://github.com/Pedro-Henrique-Pontes/Festival_TECH_UNIFEI.git
-   
+2. **Acesse a pasta do projeto:**
+
+cd Festival_TECH_UNIFEI
+
+Execute o programa principal:
+
+python terminal.py
