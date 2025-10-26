@@ -28,3 +28,77 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
    ```bash
    python terminal.py
 4. **O terminal vai aguardar que algum dos comandos sejam executados**
+    ```bash
+    EXEMPLO DE EXECUÇÃO:
+    >ajuda
+    ============================================================
+                   COMANDOS DISPONÍVEIS   
+    ============================================================
+    COMANDO         | DESCRIÇÃO
+    ------------------------------------------------------------
+    COMPRAR         | Comprar <nome> <categoria: VIP/INTEIRA/MEIA>
+    ENTRAR          | Permite entrada do próximo da fila
+    ESPIAR          | Mostra próximo sem remover
+    CANCELAR        | Cancela ingresso por ID
+    LISTAR          | Lista todos na fila atual
+    ESTATISTICAS    | Mostra estatísticas
+    MODO            | MODO PADRAO / PRIORIDADE
+    IR              | Salva estado e avança (ex: IR confirmar)
+    VOLTAR          | Retorna ao estado anterior
+    AVANCAR         | Refaz um estado desfeito
+    ONDE            | Mostra descrição do estado atual
+    SAIR            | Encerra o sistema
+    ============================================================
+    >comprar Gabi meia
+    OK: ingresso 1
+    
+    >comprar Pedro vip
+    OK: ingresso 2
+    
+    >comprar Nicole inteira
+    OK: ingresso 3
+    
+    > listar
+    [1] Gabi (MEIA)
+    [2] Pedro (VIP)
+    [3] Nicole (INTEIRA)
+    
+    >modo prioridade
+    
+    >entrar
+    Entrada: [2] Pedro (VIP)
+    
+    > estatisticas
+    pendentes=2, atendidos=1, por_categoria={'VIP': 1, 'INTEIRA': 0, 'MEIA': 0}, espera_media=1.0
+    
+    >modo padrao
+    
+    >entrar
+    Entrada: [1] Gabi (Meia)
+    
+    >desfazer
+    OK: Desfeito: ENTRAR [1] gabi (MEIA)
+    
+    >espiar
+    Próximo: [1] gabi (Meia)
+    
+    >refazer
+    OK: Refeito: ENTRAR [1] gabi (VIP)
+
+    >cancelar 3
+    OK: ingresso 3 cancelado
+    ir \lago
+    OK: \lago
+    
+    > ir \palco\vip
+    OK: \palco\vip
+    
+    > voltar
+    OK: \palco
+    
+    > avancar
+    OK: \palco\vip
+    
+    > onde
+    \palco\vip
+   
