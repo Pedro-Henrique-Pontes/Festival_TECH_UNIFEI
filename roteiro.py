@@ -1,6 +1,6 @@
 # roteiro.py
 import os
-from pilha import criar_pilha, push, pop, vazia
+from pilha import criar_pilha, push, pop, vazia, topo
 
 def _join(caminho_atual, novo_caminho):
     # usar isabs para portabilidade (Windows também)
@@ -9,13 +9,6 @@ def _join(caminho_atual, novo_caminho):
     else:
         return os.path.normpath(os.path.join(caminho_atual, novo_caminho))
 
-def _topo(pilha):
-    """Retorna o elemento do topo sem alterar a pilha (usa pop+push)."""
-    if vazia(pilha):
-        return None
-    item = pop(pilha)
-    push(pilha, item)
-    return item
 
 def ir(atual, voltar, avancar, destino):
     # não empilha o atual se ele já estiver no topo da pilha 'voltar'
