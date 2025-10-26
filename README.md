@@ -24,7 +24,7 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
     ┗  README.md               # Documentação do projeto
     
 ### Pré-requisitos
-- **Python 3.10** ou superior instalado no sistema.  
+- **Python 3.12** ou superior instalado no sistema.  
 - Um terminal (Prompt de Comando, PowerShell, ou o terminal do VSCode).  
 ### Passos para execução
 
