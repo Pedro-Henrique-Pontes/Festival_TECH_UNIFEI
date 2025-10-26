@@ -16,7 +16,7 @@ def vazia(pilha):
 
 def tamanho(pilha):
     return len(pilha)
-def topo(pilha):
+def _topo(pilha):
     if vazia(pilha):
         return None
     item = pop(pilha)
