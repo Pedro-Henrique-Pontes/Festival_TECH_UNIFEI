@@ -101,4 +101,6 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
     
     > onde
     \palco\vip
-   
+
+    >sair
+    Encerrando o sistema.
