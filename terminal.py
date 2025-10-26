@@ -100,8 +100,9 @@ def bilheteria_portaria():
                 print("OK")  # já está nesse modo
                 continue
 
-            # Salvar estado ANTES da conversão
-            push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
+            # Salvar estado ANTES da conversão, com descrição da ação
+            acao_descr = f"MODO {tipo_fila}->{novo_modo}"
+            push(historico_desfazer, {"estado": copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila), "acao": acao_descr})
             historico_refazer.clear()
 
             # Converter filas conforme o novo modo
@@ -136,8 +137,9 @@ def bilheteria_portaria():
                 print("Categoria inválida. Use: VIP, INTEIRA ou MEIA.")
                 continue
 
-            # Salvar estado antes
-            push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
+            # Salvar estado antes, com descrição da ação (sem ID, pois ID é gerado depois)
+            acao_descr = f"COMPRAR {nome} ({categoria})"
+            push(historico_desfazer, {"estado": copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila), "acao": acao_descr})
             historico_refazer.clear()
 
             ingresso = criar_ingresso()
@@ -157,12 +159,29 @@ def bilheteria_portaria():
             print(f"OK: ingresso {ingresso}")
 
         elif cmd == "ENTRAR":
-            # Salvar estado antes
-            push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
-            historico_refazer.clear()
-
-            tempo_logico += 1
+            # Primeiro espiar quem será atendido para guardar descrição da ação
             try:
+                if tipo_fila == "PRIORIDADE":
+                    # encontra a primeira categoria não vazia
+                    p_peek = None
+                    for cat in ["VIP", "INTEIRA", "MEIA"]:
+                        if not vazia(fila_prioridade[cat]):
+                            p_peek = frente(fila_prioridade[cat])
+                            break
+                else:
+                    p_peek = frente(fila_padrao) if not vazia(fila_padrao) else None
+
+                if p_peek is None:
+                    print("Nenhuma pessoa na fila.")
+                    continue
+
+                acao_descr = f"ENTRAR [{p_peek['ID']}] {p_peek['Nome']} ({p_peek['Categoria']})"
+
+                # Salvar estado antes
+                push(historico_desfazer, {"estado": copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila), "acao": acao_descr})
+                historico_refazer.clear()
+
+                tempo_logico += 1
                 if tipo_fila == "PRIORIDADE":
                     pessoa = desenfileirar_prioridade(fila_prioridade)
                 else:
@@ -230,11 +249,39 @@ def bilheteria_portaria():
                 print("ID inválido.")
                 continue
 
+            # Antes de modificar, procurar a pessoa para montar descrição da ação
+            removido = False
+            info_nome = None
+            info_categoria = None
+            if tipo_fila == "PADRAO":
+                for p in fila_padrao:
+                    if p["ID"] == id_cancelar:
+                        removido = True
+                        info_nome = p["Nome"]
+                        info_categoria = p["Categoria"]
+                        break
+            else:
+                for cat in ["VIP", "INTEIRA", "MEIA"]:
+                    for p in fila_prioridade[cat]:
+                        if p["ID"] == id_cancelar:
+                            removido = True
+                            info_nome = p["Nome"]
+                            info_categoria = p["Categoria"]
+                            break
+                    if removido:
+                        break
+
+            if not removido:
+                print(f"Erro: ingresso {id_cancelar} não encontrado.")
+                continue
+
+            acao_descr = f"CANCELAR [{id_cancelar}] {info_nome} ({info_categoria})"
+
             # Salvar estado antes
-            push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
+            push(historico_desfazer, {"estado": copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila), "acao": acao_descr})
             historico_refazer.clear()
 
-            removido = False
+            # Executar remoção
             if tipo_fila == "PADRAO":
                 nova_fila = criar_fila()
                 while not vazia(fila_padrao):
@@ -264,27 +311,33 @@ def bilheteria_portaria():
             if vazia(historico_desfazer):
                 print("Nada para desfazer.")
             else:
-                push(historico_refazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
-                estado = pop(historico_desfazer)
+                # Pegar o snapshot que representa o estado ANTES da ação que queremos desfazer
+                snapshot = pop(historico_desfazer)
+                # salvar estado atual no histórico de refazer, associando a mesma descrição de ação
+                push(historico_refazer, {"estado": copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila), "acao": snapshot["acao"]})
+                # restaurar o estado salvo (o 'estado' dentro do snapshot)
+                estado = snapshot["estado"]
                 fila_padrao = estado["fila_padrao"]
                 fila_prioridade = estado["fila_prioridade"]
                 atendidos = estado["atendidos"]
                 tempo_logico = estado["tempo_logico"]
                 tipo_fila = estado["tipo_fila"]
-                print("OK")
+                print(f"OK: Desfeito: {snapshot['acao']}")
 
         elif cmd == "REFAZER":
             if vazia(historico_refazer):
                 print("Nada para refazer.")
             else:
-                push(historico_desfazer, copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila))
-                estado = pop(historico_refazer)
+                snapshot = pop(historico_refazer)
+                # salvar estado atual no histórico de desfazer, associando a mesma descrição de ação
+                push(historico_desfazer, {"estado": copiar_estado(fila_padrao, fila_prioridade, atendidos, tempo_logico, tipo_fila), "acao": snapshot["acao"]})
+                estado = snapshot["estado"]
                 fila_padrao = estado["fila_padrao"]
                 fila_prioridade = estado["fila_prioridade"]
                 atendidos = estado["atendidos"]
                 tempo_logico = estado["tempo_logico"]
                 tipo_fila = estado["tipo_fila"]
-                print("OK")
+                print(f"OK: Refeito: {snapshot['acao']}")
 
         elif cmd == "SALVAR":
             if len(partes) != 2:
