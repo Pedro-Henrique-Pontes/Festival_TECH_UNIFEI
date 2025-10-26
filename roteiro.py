@@ -34,7 +34,8 @@ def ir(atual, voltar, avancar, destino):
     return novo_local
 
 def voltar(atual, voltar, avancar):
-    if atual == os.path.normpath('/') and vazia(voltar):
+    # Evita tentar dar pop() em pilha vazia — imprime apenas a mensagem de erro desejada.
+    if vazia(voltar):
         print("ERRO: Nenhum local anterior.")
         return atual
     push(avancar, atual)  # empilha para poder avançar depois
@@ -53,5 +54,4 @@ def avancar(atual, voltar, avancar):
     return proximo
 
 def onde(atual):
-    print(atual)
     print(atual)
