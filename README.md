@@ -14,14 +14,15 @@ O projeto utiliza a linguagem **Python** para criar um **terminal de comandos in
 
 O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para implementar uma variedade de comandos que controlam o fluxo de visitantes, o registro de entradas e saídas, além de funcionalidades de navegação entre locais do evento.
 
-# Estruturas de dados
-   ```bash
-   ┣  terminal.py             # Execução da main e estrturação dos comando
-   ┣  pilha.py                # Implementação da pilha
-   ┣  fila.py                 # Implementação da fila
-   ┣  ingressos.py            # Criação dos ingressos
-   ┣  roteiro.py              # Funções de movimentação
-   ┗  README.md               # Documentação do projeto
+**Estruturas de dados**
+     ```bash
+      ┣  terminal.py             # Execução da main e estrturação dos comando
+      ┣  pilha.py                # Implementação da pilha
+      ┣  fila.py                 # Implementação da fila
+      ┣  ingressos.py            # Criação dos ingressos
+      ┣  roteiro.py              # Funções de movimentação
+      ┗  README.md               # Documentação do projeto
+   
 
 ### Pré-requisitos
 - **Python 3.10** ou superior instalado no sistema.  
@@ -115,6 +116,6 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
     >sair
     Encerrando o sistema.
     
-**Decisões de implementação**
+# Decisões de implementação
 
 
