@@ -27,4 +27,4 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
 3. **Execute o programa principal:**
    ```bash
    python terminal.py
-
+4. **O terminal vai aguardar que algum dos comandos sejam executados**
