@@ -7,3 +7,9 @@ Matrícula:
 
 Thalytta Fernandes Damiani
 Matrícula:
+
+# Sistema de Terminal Interativo do Festival Universitário
+
+O projeto utiliza a linguagem **Python** para criar um **terminal de comandos interativo**, que simula as operações da **bilheteria** e **portaria**, em conjunto também o **roteiro de visitantes** de um festival universitário.
+
+O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para implementar uma variedade de comandos que controlam o fluxo de visitantes, o registro de entradas e saídas, além de funcionalidades de navegação entre locais do evento.
