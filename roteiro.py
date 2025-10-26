@@ -1,6 +1,6 @@
 # roteiro.py
 import os
-from pilha import criar_pilha, push, pop, vazia, topo
+from pilha import criar_pilha, push, pop, vazia, _topo
 
 def _join(caminho_atual, novo_caminho):
     # usar isabs para portabilidade (Windows também)
