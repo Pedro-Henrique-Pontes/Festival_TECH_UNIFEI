@@ -22,9 +22,9 @@ O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para i
    ```bash
    https://github.com/Pedro-Henrique-Pontes/Festival_TECH_UNIFEI.git
 2. **Acesse a pasta do projeto:**
+ ```bash
+   cd Festival_TECH_UNIFEI
 
-cd Festival_TECH_UNIFEI
-
-Execute o programa principal:
-
-python terminal.py
+3. **Execute o programa principal:**
+ ```bash
+    python terminal.py
