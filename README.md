@@ -15,7 +15,7 @@ O projeto utiliza a linguagem **Python** para criar um **terminal de comandos in
 O terminal faz uso de **estruturas de dados** como **filas** e **pilhas** para implementar uma variedade de comandos que controlam o fluxo de visitantes, o registro de entradas e saídas, além de funcionalidades de navegação entre locais do evento.
 
 **Estruturas de dados**
-     ```bash
+    ```bash
       ┣  terminal.py             # Execução da main e estrturação dos comando
       ┣  pilha.py                # Implementação da pilha
       ┣  fila.py                 # Implementação da fila
