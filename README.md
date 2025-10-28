@@ -3,10 +3,10 @@ Trabalho referente à disciplina de Python, Estrutura de dados e Orientação a 
 
 Integrantes
 Pedro Henrique Pontes
-Matrícula: 
+Matrícula: 2025007702
 
 Thalytta Fernandes Damiani
-Matrícula:2025004602
+Matrícula: 2025004602
 
 # Sistema de Terminal Interativo do Festival Universitário
 
@@ -116,4 +116,12 @@ O terminal faz uso de estruturas de dados como filas e pilhas para implementar u
     Encerrando o sistema.
     
 # Decisões de implementação
-    
+Uso de pilhas para o controle de navegação (voltar/avançar).
+
+Uso de pilhas para gerenciamento da ordem das atividades para as funções DESFAZER/REFAZER.
+
+Uso de filas para o gerenciamento de visitantes na bilheteria e portaria, com dois Modos sendo eles PADRAO/PRIORIDADE..
+
+Estrutura modular para facilitar a leitura e manutenção do código.
+
+Simulação textual intuitiva com mensagens de erro caso o usuário tente algo inválido, esta executada via terminal.
